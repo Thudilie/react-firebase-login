@@ -6,9 +6,7 @@ const Navigation = (props) => (
     <div className="justify-content-md-center">
       <ul className="navbar-nav">
         <div className="container">
-          <a className="navbar-brand" href="/">
-            Code Challenge
-          </a>
+          <div className="navbar-brand">Code Challenge</div>
         </div>
         {!props.username && (
           <>
