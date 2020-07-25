@@ -2,6 +2,26 @@
 
 This repository covers the simple login, logout and registration of a user. It uses React.js and Google Firebase.
 
+> _Requirements_
+
+- [git](https://git-scm.com)
+- [Node.js](https://nodejs.org)
+- [Firbase](https://firebase.google.com/)
+
+## Start script
+
+1.) add .env file into the root dir for firebase configurations  
+2.) install packages with "npm install"  
+3.) start with "npm start"  
+4.) go to http://localhost:3000 :D
+
+## Addtional Tasks
+
+- [ ] add localstorage/cookie to persist data
+- [ ] for bigger app -> userContext() enhance states
+- [ ] beautify with antd, bootstrap or other frameworks
+- [ ] transform into TypeScript
+
 ## Available Scripts
 
 In the project directory, you can run:
