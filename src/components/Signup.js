@@ -4,10 +4,15 @@ import useInputState from "./../hooks/useInputState";
 
 import firebase from "./../Firebase";
 
+import SignupEmail from "./SignupEmail";
+import SignupPassword from "./SignupPassword";
+import SignupName from "./SignupName";
+
 const Signup = () => {
   const [email, setEmail, resetEmail] = useInputState("");
   const [name, setName, resetName] = useInputState("");
   const [password, setPassword, resetPassword] = useInputState("");
+  const [step, setstep] = useInputState(0);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -23,49 +28,50 @@ const Signup = () => {
     }
   };
 
+  const before = (event) => {
+    event.preventDefault();
+    if (step > 0) setstep(step - 1);
+  };
+
+  const next = (event) => {
+    event.preventDefault();
+    if (step < 2) setstep(step + 1);
+  };
+
   return (
     <form className="container form-signin" onSubmit={onSubmit}>
       <h1 className="h3 mb-3 font-weight-normal">Please Sign up</h1>
-      <label htmlFor="inputEmail" className="sr-only">
-        Email address
-      </label>
-      <input
-        value={email}
-        type="email"
-        id="inputEmail"
-        className="form-control"
-        placeholder="Email address"
-        onChange={(event) => setEmail(event.target.value)}
-        required
-        autoFocus
-      />
-      <label htmlFor="inputPassword" className="sr-only">
-        Password
-      </label>
-      <input
-        value={password}
-        type="password"
-        id="inputPassword"
-        className="form-control"
-        placeholder="Password"
-        onChange={(event) => setPassword(event.target.value)}
-        required
-      />
-      <label htmlFor="inputName" className="sr-only">
-        Name
-      </label>
-      <input
-        value={name}
-        type="text"
-        id="inputName"
-        className="form-control"
-        placeholder="name"
-        onChange={(event) => setName(event.target.value)}
-        required
-      />
-      <button className="btn btn-lg btn-primary btn-block" type="submit">
-        Sign up
-      </button>
+
+      {(() => {
+        switch (step) {
+          case 0:
+            return <SignupEmail email={email} setEmail={setEmail} />;
+          case 1:
+            return (
+              <SignupPassword password={password} setPassword={setPassword} />
+            );
+          case 2:
+            return <SignupName name={name} setName={setName} />;
+          default:
+            return null;
+        }
+      })()}
+      {step > 0 && (
+        <button className="btn btn-lg btn-secondary btn-block" onClick={before}>
+          before
+        </button>
+      )}
+      {step !== 2 && (
+        <button className="btn btn-lg btn-secondary btn-block" onClick={next}>
+          next
+        </button>
+      )}
+
+      {step === 2 && (
+        <button className="btn btn-lg btn-primary btn-block" type="submit">
+          Sign up
+        </button>
+      )}
     </form>
   );
 };
