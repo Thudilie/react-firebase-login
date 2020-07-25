@@ -31,7 +31,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navigation />
+        <Navigation username={userName} />
         <Switch>
           {userName && (
             <Route
