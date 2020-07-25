@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Navigation from "./components/Navigation";
 import LandingLogged from "./components/LandingLogged";
 import LandingNotLogged from "./components/LandingNotLogged";
 import Signin from "./components/Signin";
@@ -10,6 +11,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navigation />
         <Switch>
           <Route exact path="/" component={LandingNotLogged} />
           <Route exact path="/" component={LandingLogged} />
