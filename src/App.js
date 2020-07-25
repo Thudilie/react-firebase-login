@@ -26,16 +26,12 @@ function App() {
     <Router>
       <div className="App">
         <Navigation />
-        {userName}
         <Switch>
-          {!userName && <Route exact path="/" component={LandingNotLogged} />}
-          <Route exact path="/" component={LandingLogged} />
+          {userName && <Route path="/" component={LandingLogged} />}
           {!userName && (
             <>
-              <Route
-                path="/signin"
-                render={(props) => <Signin login={login} />}
-              />
+              <Route exact path="/" component={LandingNotLogged} />
+              <Route path="/signin" render={() => <Signin login={login} />} />
               <Route exact path="/signup" component={Signup} />
             </>
           )}
