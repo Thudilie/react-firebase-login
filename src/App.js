@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import firebase from "./Firebase";
 
 import Navigation from "./components/Navigation";
 import LandingLogged from "./components/LandingLogged";
@@ -8,14 +10,27 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 
 function App() {
+  const [userName, setUserName] = useState(null);
+  const login = async (email, password) => {
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      const name = await firebase.auth().currentUser.displayName;
+      setUserName(name);
+      alert("successfully logged in");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <Router>
       <div className="App">
         <Navigation />
+        {userName}
         <Switch>
           <Route exact path="/" component={LandingNotLogged} />
           <Route exact path="/" component={LandingLogged} />
-          <Route exact path="/signin" component={Signin} />
+          <Route path="/signin" render={(props) => <Signin login={login} />} />
           <Route exact path="/signup" component={Signup} />
         </Switch>
       </div>
