@@ -11,15 +11,21 @@ import Signup from "./components/Signup";
 
 function App() {
   const [userName, setUserName] = useState(null);
+
   const login = async (email, password) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
       const name = await firebase.auth().currentUser.displayName;
       setUserName(name);
-      alert("successfully logged in");
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const logout = (event) => {
+    event.preventDefault();
+    setUserName(null);
+    firebase.auth().signOut();
   };
 
   return (
@@ -27,7 +33,12 @@ function App() {
       <div className="App">
         <Navigation />
         <Switch>
-          {userName && <Route path="/" component={LandingLogged} />}
+          {userName && (
+            <Route
+              path="/"
+              render={() => <LandingLogged user={userName} logout={logout} />}
+            />
+          )}
           {!userName && (
             <>
               <Route exact path="/" component={LandingNotLogged} />
